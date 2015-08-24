@@ -7,29 +7,21 @@ app.get('/', function(req, res){
   res.render('index', {name: 'Sky'});
 });
 
-app.get('/add/:num1/:num2', function(req, res){
-  var num1 = Number(req.params.num1),
-      num2 = Number(req.params.num2);
-  res.sendStatus(num1 + num2); // tried using res.send, but its deprecated
+app.get('/:operation/:num1/:num2', function(req, res){
+  var operation = req.params.operation,
+      num1 = Math.round(Number(req.params.num1) * 100) / 100,
+      num2 = Math.round(Number(req.params.num2) * 100) / 100;
+  if (operation === "add"){
+    res.sendStatus(num1 + num2);
+  } else if (operation === "sub"){
+    res.sendStatus(num1 - num2);
+  } else if (operation === "mult"){
+    res.sendStatus(num1 * num2);
+  } else if (operation === "div"){
+    res.sendStatus(num1/num2);
+  }
 });
 
-app.get('/sub/:num1/:num2', function(req, res){
-  var num1 = Number(req.params.num1),
-      num2 = Number(req.params.num2);
-  res.sendStatus(num1 - num2);
-});
-
-app.get('/mult/:num1/:num2', function(req, res){
-  var num1 = Number(req.params.num1),
-      num2 = Number(req.params.num2);
-  res.sendStatus(num1 * num2);
-});
-
-app.get('/div/:num1/:num2', function(req, res){
-  var num1 = Number(req.params.num1),
-      num2 = Number(req.params.num2);
-  res.sendStatus(num1/num2);
-});
 
 app.listen(3000, function(){
   console.log('Server listening on localhost:3000');
