@@ -1,39 +1,36 @@
 var express = require('express'),
-    app = express(),
-    vegetables = [
-        "Carrots",
-        "Cucumber",
-        "Peas"
-         ];
+    app = express();
 
-// When a user visits the homepage...
+app.set('view engine', 'ejs');
 app.get('/', function(req, res){
-  res.send('Hello World!');
+  console.log(req.params);
+  res.render('index', {name: 'Sky'});
 });
 
-app.get('/hello/:name', function(req, res){
-  res.send( "Hello there, " + req.params.name );
-})
-
-app.get('/companies/:company/products/:productName', function(req, res){
-  res.send( req.params.company + " makes the " + req.params.productName );
+app.get('/add/:num1/:num2', function(req, res){
+  var num1 = Number(req.params.num1),
+      num2 = Number(req.params.num2);
+  res.sendStatus(num1 + num2); // tried using res.send, but its deprecated
 });
 
-app.get('/greeting', function(req, res){
-  var name = req.query.name;
-  res.send("Hello to you, " + name);
+app.get('/sub/:num1/:num2', function(req, res){
+  var num1 = Number(req.params.num1),
+      num2 = Number(req.params.num2);
+  res.sendStatus(num1 - num2);
 });
 
-app.get('/vegetables', function(req, res){
-  res.send(vegetables.join(', '));
-})
-
-// Add another route
-app.get('/meaning-of-life', function(req, res){
-  res.send("42");
+app.get('/mult/:num1/:num2', function(req, res){
+  var num1 = Number(req.params.num1),
+      num2 = Number(req.params.num2);
+  res.sendStatus(num1 * num2);
 });
 
-// Start the server to listen on port 3000
+app.get('/div/:num1/:num2', function(req, res){
+  var num1 = Number(req.params.num1),
+      num2 = Number(req.params.num2);
+  res.sendStatus(num1/num2);
+});
+
 app.listen(3000, function(){
-  console.log("Starting a server on localhost:3000");
+  console.log('Server listening on localhost:3000');
 });
